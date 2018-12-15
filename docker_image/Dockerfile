@@ -156,4 +156,13 @@ ENV PATH="/software/atac-seq-pipeline:/software/atac-seq-pipeline/src:${PATH}"
 # make some temporary directories
 RUN for i in $(seq 0 9); do mkdir -p /mnt/ext_$i; done
 
+# needed for MGI data mounts
+RUN apt-get update && apt-get install -y libnss-sss && apt-get clean all
+
+#set timezone to CDT
+RUN ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime
+#LSF: Java bug that need to change the /etc/timezone.
+#     The above /etc/localtime is not enough.
+RUN echo "America/Chicago" > /etc/timezone
+
 ENTRYPOINT ["/bin/bash","-c"]

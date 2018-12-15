@@ -33,7 +33,7 @@ workflow atac {
 									# dup.qc and pbc.qc will be empty files
 									# and nodup_bam in the output is filtered bam with dupes	
 
-	String regex_filter_reads = 'chrM' 	# Perl-style regular expression pattern for chr name to filter out reads
+	String regex_filter_reads = 'chrM|chrUn_|_random|chrEBV|_alt|HLA-' 	# Perl-style regular expression pattern for chr name to filter out reads
                         		# to remove matching reads from TAGALIGN
 	Int subsample_reads = 0		# number of reads to subsample TAGALIGN
 								# 0 for no subsampling. this affects all downstream analysis
@@ -725,7 +725,7 @@ task trim_adapter { # trim adapters and merge trimmed fastqs
 		memory : "${mem_mb} MB"
 		time : time_hr
 		disks : disks
-		docker_image : ${docker_image}
+		docker_image : docker_image
 	}
 }
 
@@ -764,7 +764,7 @@ task bowtie2 {
 		time : time_hr
 		disks : disks
 		preemptible: 0
-		docker_image : ${docker_image}
+		docker_image : docker_image
 	}
 }
 
@@ -810,7 +810,7 @@ task filter {
 		memory : "${mem_mb} MB"
 		time : time_hr
 		disks : disks
-		docker_image : ${docker_image}
+		docker_image : docker_image
 	}
 }
 
@@ -845,7 +845,7 @@ task bam2ta {
 		memory : "${mem_mb} MB"
 		time : time_hr
 		disks : disks
-		docker_image : ${docker_image}
+		docker_image : docker_image
 	}
 }
 
@@ -870,7 +870,7 @@ task spr { # make two self pseudo replicates
 		memory : "${mem_mb} MB"
 		time : 1
 		disks : "local-disk 50 HDD"
-		docker_image : ${docker_image}
+		docker_image : docker_image
 	}
 }
 
@@ -890,7 +890,7 @@ task pool_ta {
 		memory : "4000 MB"
 		time : 1
 		disks : "local-disk 50 HDD"
-		docker_image : ${docker_image}
+		docker_image : docker_image
 	}
 }
 
@@ -925,7 +925,7 @@ task xcor {
 		memory : "${mem_mb} MB"
 		time : time_hr
 		disks : disks
-		docker_image : ${docker_image}
+		docker_image : docker_image
 	}
 }
 
@@ -975,7 +975,7 @@ task macs2 {
 		memory : "${mem_mb} MB"
 		time : time_hr
 		disks : disks
-		docker_image : ${docker_image}
+		docker_image : docker_image
 	}
 }
 
@@ -1023,7 +1023,7 @@ task idr {
 		memory : "8000 MB"
 		time : 1
 		disks : "local-disk 50 HDD"
-		docker_image : ${docker_image}
+		docker_image : docker_image
 	}	
 }
 
@@ -1064,7 +1064,7 @@ task overlap {
 		memory : "4000 MB"
 		time : 1
 		disks : "local-disk 50 HDD"
-		docker_image : ${docker_image}
+		docker_image : docker_image
 	}
 }
 
@@ -1105,7 +1105,7 @@ task reproducibility {
 		memory : "4000 MB"
 		time : 1
 		disks : "local-disk 50 HDD"
-		docker_image : ${docker_image}
+		docker_image : docker_image
 	}
 }
 
@@ -1183,7 +1183,7 @@ task ataqc { # generate ATAQC report
 		memory : "${mem_mb} MB"
 		time : time_hr
 		disks : disks
-		docker_image : ${docker_image}
+		docker_image : docker_image
 	}
 }
 
@@ -1284,7 +1284,7 @@ task qc_report {
 		memory : "4000 MB"
 		time : 1
 		disks : "local-disk 50 HDD"
-		docker_image : ${docker_image}		
+		docker_image : docker_image		
 	}
 }
 
@@ -1397,6 +1397,6 @@ task compare_md5sum {
 		memory : "4000 MB"
 		time : 1
 		disks : "local-disk 50 HDD"	
-		docker_image : ${docker_image}	
+		docker_image : docker_image	
 	}
 }
