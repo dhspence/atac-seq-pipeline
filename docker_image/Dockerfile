@@ -12,7 +12,7 @@
 FROM ubuntu:16.04
 
 # File Author / Maintainer
-MAINTAINER Jin Lee
+MAINTAINER Dave Spencer
 
 # Update the repository sources list
 # Install base packages: git, python2/3, java, R
